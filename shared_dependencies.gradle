@@ -1,0 +1,20 @@
+dependencies {
+    implementation "androidx.appcompat:appcompat:1.5.1"
+    implementation "androidx.core:core-ktx:1.9.0"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+    testImplementation "junit:junit:4.13.2"
+    androidTestImplementation "androidx.test.ext:junit:1.1.4"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.0"
+
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
+    implementation "com.google.android.material:material:1.8.0-alpha02"
+    implementation "com.github.bumptech.glide:glide:4.13.2"
+
+    //dagger
+    implementation "com.google.dagger:hilt-android:2.43.2"
+    kapt "com.google.dagger:hilt-android-compiler:2.43.2"
+    kapt "androidx.hilt:hilt-compiler:2.43.2"
+    kaptAndroidTest "androidx.hilt:hilt-compiler:2.43.2"
+
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'
+}
