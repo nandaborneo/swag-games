@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Swag Games</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_home">Home</string>
+    <string name="title_profile">Profile</string>
+    <string name="image_game">Image Game</string>
+    <string name="image_platform">Image Platform</string>
+    <string name="rating">rating</string>
+    <string name="popular">Popular</string>
+    <string name="reload_data">reload data</string>
+    <string name="reload">Reload</string>
+</resources>

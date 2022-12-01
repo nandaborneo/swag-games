@@ -1,6 +1,7 @@
 package app.web.sleepcoder.core.di
 
 import android.app.Application
+import app.web.sleepcoder.core.BuildConfig
 import app.web.sleepcoder.core.data.source.remote.network.ApiServices
 import app.web.sleepcoder.core.utils.HttpPrettyLogger
 import dagger.Module
@@ -26,7 +27,7 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(application: Application): OkHttpClient {
-        val interceptor = HttpLoggingInterceptor(HttpPrettyLogger())
+        val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
 
         val cacheDir = File(application.cacheDir, UUID.randomUUID().toString())
@@ -38,14 +39,23 @@ class NetworkModule {
             .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
             .addInterceptor(interceptor)
+            .addInterceptor {
+                it.proceed(
+                    it.request().newBuilder().url(
+                        it.request().url.newBuilder().addQueryParameter(
+                            "key", BuildConfig.RAWG_TOKEN
+                        ).build()
+                    ).build()
+                )
+            }
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideApiService(okHttpClient: OkHttpClient, baseUrl: HttpUrl): ApiServices {
+    fun provideApiService(okHttpClient: OkHttpClient): ApiServices {
         return Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl("https://api.rawg.io/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

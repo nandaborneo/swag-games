@@ -1,5 +1,5 @@
 package app.web.sleepcoder.core.data.source.remote.response
 
 data class ParentPlatform(
-    val platform: PlatformX
+    val platform: PlatformDetail
 )

@@ -5,15 +5,22 @@ import app.web.sleepcoder.core.data.source.remote.response.ListGameResponse
 import retrofit2.http.FieldMap
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiServices {
-    @GET("games/{id}")
+    @GET("games/{slug}")
     suspend fun getDetailGame(
-        @Path("id") id: String
+        @Path("slug") slug: String
     ): GameDetailResponse
 
-    @GET("games")
-    suspend fun getListGame(
-        @FieldMap search: Map<String, String>
+    @GET("games?parent_platforms=1,2,3,4,8")
+    suspend fun getListPopularGame(
+        @Query("page") page: Int
+    ): ListGameResponse
+
+    @GET("games?parent_platforms=1,2,3,4,8")
+    suspend fun getListSearchGame(
+        @Query("search") search: String,
+        @Query("page") page: Int
     ): ListGameResponse
 }
