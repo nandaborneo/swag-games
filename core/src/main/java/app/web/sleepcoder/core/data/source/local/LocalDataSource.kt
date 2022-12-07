@@ -1,13 +1,11 @@
 package app.web.sleepcoder.core.data.source.local
 
 import androidx.paging.PagingSource
-import app.web.sleepcoder.core.data.source.local.entity.GameEntity
-import app.web.sleepcoder.core.data.source.local.entity.GameWithStores
-import app.web.sleepcoder.core.data.source.local.entity.RemoteKeys
-import app.web.sleepcoder.core.data.source.local.entity.StoreEntity
+import app.web.sleepcoder.core.data.source.local.entity.*
 import app.web.sleepcoder.core.data.source.local.room.GameDao
 import app.web.sleepcoder.core.data.source.local.room.RemoteKeysDao
 import app.web.sleepcoder.core.data.source.local.room.StoreDao
+import app.web.sleepcoder.core.utils.DataMapper.asFavoriteEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -21,20 +19,24 @@ class LocalDataSource @Inject constructor(
 
     fun getAllGame(): PagingSource<Int, GameEntity> = gameDao.getAllGame()
 
-    fun getFavoriteGame(): PagingSource<Int, GameEntity> = gameDao.getFavoriteGame()
+    fun getFavoriteGame(): PagingSource<Int, FavoriteEntity> = gameDao.getFavoriteGame()
 
-    fun getDetailGame(slug: String): Flow<GameWithStores> = gameDao.getDetailGame(slug)
+    fun getDetailGame(slug: String): Flow<GameWithStores?> = gameDao.getDetailGame(slug)
 
     suspend fun insertGame(tourismList: List<GameEntity>) = gameDao.insertGame(tourismList)
 
-    suspend fun deleteAllGame(){
+    suspend fun deleteAllGame() {
         gameDao.deleteAll()
     }
 
-    fun setFavoriteGame(tourism: GameEntity, newState: Boolean) {
-        tourism.isFavorite = newState
-        gameDao.updateFavoriteGame(tourism)
+    fun setFavoriteGame(game: GameEntity, newState: Boolean) {
+        if (newState)
+            gameDao.updateFavoriteGame(game.asFavoriteEntity)
+        else
+            gameDao.removeFavoriteGame(game.slug)
     }
+
+    suspend fun getFavorite(slug: String) = gameDao.getFavoriteBySlug(slug)
 
     suspend fun insertKey(remoteKey: List<RemoteKeys>) {
         remoteKeysDao.insertAll(remoteKey)
@@ -51,11 +53,9 @@ class LocalDataSource @Inject constructor(
         storeDao.insertAll(stores)
     }
 
-    suspend fun deleteStores(){
+    suspend fun deleteStores() {
         storeDao.deleteStores()
     }
-
-
 
 
 }

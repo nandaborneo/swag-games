@@ -1,5 +1,6 @@
 package app.web.sleepcoder.core.data
 
+import android.util.Log
 import androidx.paging.*
 import app.web.sleepcoder.core.data.paging.GameRemoteMediator
 import app.web.sleepcoder.core.data.source.local.LocalDataSource
@@ -11,6 +12,7 @@ import app.web.sleepcoder.core.domain.model.Game
 import app.web.sleepcoder.core.domain.repository.IGameRepository
 import app.web.sleepcoder.core.utils.AppExecutors
 import app.web.sleepcoder.core.utils.DataMapper.asDatabaseLayer
+import app.web.sleepcoder.core.utils.DataMapper.asGameEntity
 import app.web.sleepcoder.core.utils.DataMapper.asModelLayer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -58,7 +60,11 @@ class GamesRepository @Inject constructor(
     override fun getDetailGame(slug: String): Flow<Resource<Game>> =
         object : NetworkBoundResource<Game, GameDetailResponse>() {
             override fun loadFromDB(): Flow<Game> =
-                localDataSource.getDetailGame(slug).map { it.asModelLayer }
+                localDataSource.getDetailGame(slug).map {
+                    it?.asModelLayer?.apply {
+                        isFavorite = localDataSource.getFavorite(slug) != null
+                    } ?: Game()
+                }
 
             override fun shouldFetch(data: Game?): Boolean = true
 
@@ -83,7 +89,7 @@ class GamesRepository @Inject constructor(
             ),
             pagingSourceFactory = { localDataSource.getFavoriteGame() }
         ).flow.map { pagingData ->
-            pagingData.map { it.asModelLayer }
+            pagingData.map { it.asGameEntity.asModelLayer }
         }
 
     override fun setFavoriteGame(game: Game, state: Boolean) {

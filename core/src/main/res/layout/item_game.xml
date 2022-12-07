@@ -68,7 +68,7 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/white"
-            setIconified="@{game}"
+            setGameNameWithIcon="@{game}"
             app:layout_constraintTop_toBottomOf="@id/iv_platform"
             tools:text="Vampire: The Masquerade - Bloodlines 2" />
 

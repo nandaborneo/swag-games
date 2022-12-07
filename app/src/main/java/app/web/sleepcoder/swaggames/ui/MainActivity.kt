@@ -2,9 +2,12 @@ package app.web.sleepcoder.swaggames.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import app.web.sleepcoder.swaggames.R
 import app.web.sleepcoder.swaggames.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,10 +22,22 @@ class MainActivity : AppCompatActivity() {
         viewBinding.lifecycleOwner = this
         setContentView(viewBinding.root)
 
-        viewBinding.bottomNavView.itemIconTintList = null
-        var navHost = supportFragmentManager.findFragmentById(viewBinding.fragmentContainerView.id) as NavHostFragment
-        viewBinding.bottomNavView.setupWithNavController(
-            navHost.navController
-        )
+        viewBinding.bottomNavView.apply {
+            itemIconTintList = null
+            val navHost = supportFragmentManager.findFragmentById(viewBinding.fragmentContainerView.id) as NavHostFragment
+            navHost.navController.addOnDestinationChangedListener{
+                _, destination, _ ->
+                visibility = when("${destination.id}"){
+                    "${R.id.homeFragment}" -> View.VISIBLE
+                    "2113994752" -> View.VISIBLE
+                    "${R.id.profileFragment}" -> View.VISIBLE
+                    else -> View.GONE
+                }
+            }
+            setupWithNavController(
+                navHost.navController
+            )
+
+        }
     }
 }

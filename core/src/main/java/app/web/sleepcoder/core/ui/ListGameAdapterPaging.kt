@@ -9,13 +9,13 @@ import app.web.sleepcoder.core.databinding.ItemGameBinding
 import app.web.sleepcoder.core.domain.model.Game
 
 class ListGameAdapterPaging(
-    private val listener: OnItemClicked<Game>
+    private val onitemClick: (game:Game) -> Unit
 ) : PagingDataAdapter<Game, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolder(
             ItemGameBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-            listener
+            onitemClick
         )
     }
 
@@ -25,13 +25,13 @@ class ListGameAdapterPaging(
 
     class ViewHolder(
         private val binding: ItemGameBinding,
-        private val listener: OnItemClicked<Game>
+        private val onitemClick: (game: Game)-> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(game: Game) {
             with(binding){
                 this.game = game
                 containerItemGame.clipToOutline = true
-                containerItemGame.setOnClickListener { listener.itemClick(game) }
+                containerItemGame.setOnClickListener { onitemClick(game) }
 
                 executePendingBindings()
             }

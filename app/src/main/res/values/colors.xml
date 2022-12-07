@@ -10,4 +10,5 @@
     <color name="mine_shaft">#202020</color>
     <color name="mine_shaft_lighter">#262626</color>
     <color name="cod_gray">#151515</color>
+    <color name="favorite_fill">#DF1C1C</color>
 </resources>

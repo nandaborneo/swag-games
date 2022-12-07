@@ -52,7 +52,6 @@ class GameRemoteMediator constructor(
                 }
             }
             val request = if (search.isBlank())
-
                 remoteDataSource.getPopularGame(
                     page = page,
                 )

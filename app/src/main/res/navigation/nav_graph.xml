@@ -9,7 +9,14 @@
         android:id="@+id/homeFragment"
         android:name="app.web.sleepcoder.swaggames.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:restoreState="true"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToSaveState="true"/>
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="app.web.sleepcoder.swaggames.ui.profile.ProfileFragment"
@@ -19,5 +26,15 @@
     <include-dynamic
         android:id="@+id/favGraph"
         app:moduleName="favorite"
-        app:graphResName="fav_graph"/>
+        app:graphResName="fav_graph">
+    </include-dynamic>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="app.web.sleepcoder.swaggames.ui.detail.DetailFragment"
+        android:label="DetailFragment" >
+        <argument
+            android:name="slug"
+            app:argType="string" />
+        <deepLink app:uri="swag-games://detailFragment/{slug}"/>
+    </fragment>
 </navigation>

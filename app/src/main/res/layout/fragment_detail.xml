@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="app.web.sleepcoder.swaggames.ui.detail.DetailFragmentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.detail.DetailFragment">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ScrollView
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="24dp">
+
+                    <ImageView
+                        android:id="@+id/iv_game"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:scaleType="centerCrop"
+                        loadImageUrl="@{vm.game.backgroundImage}"
+                        app:layout_constraintDimensionRatio="1.5:1"
+                        tools:src="@drawable/placeholder_game" />
+
+                    <ImageView
+                        android:id="@+id/iv_platform"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="8dp"
+                        android:backgroundTint="@color/white"
+                        loadImageDrawable="@{vm.game.getDrawablePlatform}"
+                        android:contentDescription="@string/image_platform"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_game"
+                        tools:background="@drawable/ic_platform_windows" />
+
+                    <TextView
+                        android:id="@+id/tv_title_game"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="8dp"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        setGameNameWithIcon="@{vm.game}"
+                        app:layout_constraintTop_toBottomOf="@id/iv_platform"
+                        tools:text="Vampire: The Masquerade - Bloodlines 2" />
+
+
+                    <TextView
+                        android:id="@+id/tv_star"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:backgroundTint="@color/white"
+                        android:contentDescription="@string/rating"
+                        android:gravity="center"
+                        android:text="@{vm.game.rating}"
+                        android:textColor="@color/white"
+                        android:textSize="24sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_star_24"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_title_game"
+                        tools:drawablePadding="4dp"
+                        tools:drawableTint="@color/white"
+                        tools:text="4.5" />
+
+                    <TextView
+                        android:id="@+id/tv_rating_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="16dp"
+                        android:backgroundTint="@color/white"
+                        android:contentDescription="@string/rating"
+                        android:gravity="center"
+                        android:textSize="24sp"
+                        android:textColor="@color/white"
+                        setIconByRatingDescription="@{vm.game}"
+                        app:layout_constraintStart_toEndOf="@id/tv_star"
+                        app:layout_constraintTop_toBottomOf="@id/tv_title_game"
+                        tools:drawablePadding="4dp"
+                        tools:drawableTint="@color/white"
+                        tools:text="Exceptional"/>
+
+                    <TextView
+                        android:id="@+id/tv_label_about"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="16dp"
+                        android:backgroundTint="@color/white"
+                        android:contentDescription="@string/rating"
+                        android:gravity="center"
+                        android:textSize="24sp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:text="@string/about"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_star"
+                        tools:drawablePadding="4dp"
+                        tools:drawableTint="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/tv_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:backgroundTint="@color/white"
+                        android:contentDescription="@string/rating"
+                        android:gravity="start"
+                        android:text="@string/about"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        textFromHtmlFormat="@{vm.game.description}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_label_about"
+                        tools:drawablePadding="4dp"
+                        tools:drawableTint="@color/white"
+                        tools:text="@string/sample_description"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <ImageButton
+            android:id="@+id/ib_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ic_back_overlay"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:src="@{vm.game.favorite ? @drawable/ic_baseline_favorite_filled_24 : @drawable/ic_baseline_favorite_border_24}"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

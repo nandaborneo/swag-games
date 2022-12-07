@@ -1,6 +1,8 @@
 package app.web.sleepcoder.core.ui
 
 import android.graphics.drawable.Drawable
+import android.os.Build
+import android.text.Html
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -20,12 +22,21 @@ object GlobalBinding {
         }
     }
 
-    @BindingAdapter("setIconified")
+    @BindingAdapter("setGameNameWithIcon")
     @JvmStatic
-    fun setIconified(view: TextView, game: Game?) {
+    fun setGameNameWithIcon(view: TextView, game: Game?) {
         game?.let {
             view.text = game.name
             game.getDrawableRating?.let { it1 -> view.setIconified(it.name, it1) }
+        }
+    }
+
+    @BindingAdapter("setIconByRatingDescription")
+    @JvmStatic
+    fun setIconByRatingDescription(view: TextView, game: Game?) {
+        game?.let {
+            view.text = game.ratingDescription
+            game.getDrawableRating?.let { it1 -> view.setIconified(it.ratingDescription, it1) }
         }
     }
 
@@ -43,6 +54,20 @@ object GlobalBinding {
 
                 override fun onLoadCleared(placeholder: Drawable?) {}
             })
+        }
+    }
+
+
+    @Suppress("DEPRECATION")
+    @BindingAdapter("textFromHtmlFormat")
+    @JvmStatic
+    fun setTextFromHtmlFormat(view: TextView, game: String?) {
+        game?.let {
+            view.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(it, Html.FROM_HTML_MODE_COMPACT)
+            } else {
+                Html.fromHtml(it)
+            }
         }
     }
 

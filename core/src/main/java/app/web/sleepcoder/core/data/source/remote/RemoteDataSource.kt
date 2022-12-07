@@ -55,8 +55,7 @@ class RemoteDataSource @Inject constructor(private val apiServices: ApiServices)
                 val response = apiServices.getDetailGame(slug)
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-                Log.e("RemoteDataSource", e.toString())
+                e.localizedMessage?.let { emit(ApiResponse.Error(it)) }
             }
         }.flowOn(Dispatchers.IO)
     }

@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".FavoriteFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="fragment fav" />
+        tools:context=".FavoriteFragment">
+        <TextView
+            android:id="@+id/tv_label_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:text="Favorite"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Favorite"/>
 
-</FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list_game"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="4dp"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/tv_label_list"
+            app:spanCount="2"
+            tools:listitem="@layout/item_game" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -8,23 +8,23 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Game(
-    val gameId: String,
-    val slug: String,
-    val name: String,
-    val nameOriginal: String,
-    val rating: String,
-    val description: String,
-    val descriptionRaw: String,
-    val released: String,
-    val isFavorite: Boolean,
-    val requirement: String,
-    val backgroundImage: String,
-    val backgroundImageAdditional: String,
-    val parentPlatform: String,
-    val clip: String,
-    val store: List<Store>,
-    val genre: String,
-    val ratingDescription: String
+    var gameId: String = "",
+    var slug: String = "",
+    var name: String = "",
+    var nameOriginal: String = "",
+    var rating: String = "",
+    var description: String = "",
+    var descriptionRaw: String = "",
+    var released: String = "",
+    var isFavorite: Boolean = false,
+    var requirement: String = "",
+    var backgroundImage: String = "",
+    var backgroundImageAdditional: String = "",
+    var parentPlatform: String = "",
+    var clip: String = "",
+    var store: List<Store> = arrayListOf(),
+    var genre: String = "",
+    var ratingDescription: String = ""
 ) : Parcelable {
 
     @IgnoredOnParcel

@@ -17,7 +17,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_search"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/ic_background_edit_text_selector"
@@ -29,6 +29,7 @@
             android:textColor="@color/search_text_selector"
             android:textColorHint="@color/search_text_selector"
             app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="8dp"
             tools:text="Search" />
 
         <TextView
@@ -43,18 +44,23 @@
             app:layout_constraintTop_toBottomOf="@id/et_search"
             tools:text="Popular"/>
 
-        <Swipe
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_list_game"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:paddingHorizontal="8dp"
-            android:paddingTop="4dp"
-            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_label_list"
-            app:spanCount="2"
-            tools:listitem="@layout/item_game"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_label_list">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_list_game"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingHorizontal="8dp"
+                android:paddingTop="4dp"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/item_game" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:layout_width="match_parent"

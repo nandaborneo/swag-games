@@ -25,9 +25,9 @@ class LoadingStateAdapter(
         return LoadingStateViewHolder(binding, retry, onError)
     }
 
-    override fun onBindViewHolder(holder: LoadingStateViewHolder, loadState: LoadState) {
+    override fun onBindViewHolder(holder: LoadingStateViewHolder, loadState: LoadState) =
         holder.bind(loadState)
-    }
+
 
     class LoadingStateViewHolder(
         private val binding: ItemLoadStateBinding,
@@ -41,7 +41,7 @@ class LoadingStateAdapter(
         fun bind(loadState: LoadState) {
             binding.tvMessage.text = ""
             if (loadState is LoadState.Error) {
-                onError(loadState.error.localizedMessage ?: "")
+                onError.invoke(loadState.error.localizedMessage ?: "")
                 binding.tvMessage.text = buildString {
                     append("Oops there is an error.\n message: }")
                     append(loadState.error.localizedMessage ?: "")

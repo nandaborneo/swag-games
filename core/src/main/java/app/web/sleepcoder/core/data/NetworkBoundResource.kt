@@ -9,7 +9,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
         emit(Resource.Loading())
         val dbSource = loadFromDB().first()
         if (shouldFetch(dbSource)) {
-            emit(Resource.Loading())
+            emit(Resource.Loading(dbSource))
             when (val apiResponse = createCall().first()) {
                 is ApiResponse.Success -> {
                     saveCallResult(apiResponse.data)

@@ -14,6 +14,6 @@ abstract class AppModule {
 
     @Binds
     @Singleton
-    abstract fun provideTourismUseCase(gameInteractor: GameInteractor): GameUseCase
+    abstract fun provideGameUseCase(gameInteractor: GameInteractor): GameUseCase
 
 }

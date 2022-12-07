@@ -1,5 +1,6 @@
 package app.web.sleepcoder.core.utils
 
+import app.web.sleepcoder.core.data.source.local.entity.FavoriteEntity
 import app.web.sleepcoder.core.data.source.local.entity.GameEntity
 import app.web.sleepcoder.core.data.source.local.entity.GameWithStores
 import app.web.sleepcoder.core.data.source.local.entity.StoreEntity
@@ -20,7 +21,6 @@ object DataMapper {
             description = this.description ?: "",
             descriptionRaw = this.descriptionRaw ?: "",
             released = this.released,
-            isFavorite = this.isFavorite,
             requirement = this.requirement,
             backgroundImage = this.backgroundImage,
             backgroundImageAdditional = this.backgroundImageAdditional,
@@ -41,7 +41,6 @@ object DataMapper {
             description = this.game.description ?: "",
             descriptionRaw = this.game.descriptionRaw ?: "",
             released = this.game.released,
-            isFavorite = this.game.isFavorite,
             requirement = this.game.requirement,
             backgroundImage = this.game.backgroundImage,
             backgroundImageAdditional = this.game.backgroundImageAdditional,
@@ -66,10 +65,10 @@ object DataMapper {
             rating = "${this.rating}",
             description = "",
             descriptionRaw = "",
-            released = this.released ?:"",
+            released = this.released ?: "",
             requirement = this.platforms.firstOrNull() { it.platform.name.contains("PC") }?.requirements_en?.recommended
                 ?: "",
-            backgroundImage = this.background_image ?:"",
+            backgroundImage = this.background_image ?: "",
             backgroundImageAdditional = "",
             parentPlatform = this.parent_platforms.firstOrNull()?.platform?.name ?: "",
             clip = this.clip?.clip ?: "",
@@ -80,7 +79,7 @@ object DataMapper {
     fun StoreResponse.asModelLayer(gameId: String) = StoreEntity(
         storeId = "${this.id}",
         gameStoreId = gameId,
-        url = this.url,
+        url = this.url ?: "",
         name = this.store.name
     )
 
@@ -101,7 +100,7 @@ object DataMapper {
             parentPlatform = this.parent_platforms.firstOrNull()?.platform?.name ?: "",
             ratingDescription = this.ratings.firstOrNull()?.title ?: "",
             genre = this.genres.joinToString(separator = ",", transform = { it.name }),
-            clip = this.clip.clip,
+            clip = this.clip?.clip ?: "",
         )
 
     val Game.asDatabaseLayer
@@ -114,7 +113,6 @@ object DataMapper {
             description = this.description,
             descriptionRaw = this.descriptionRaw,
             released = this.released,
-            isFavorite = true,
             requirement = this.requirement,
             backgroundImage = this.backgroundImage,
             backgroundImageAdditional = this.backgroundImageAdditional,
@@ -122,5 +120,37 @@ object DataMapper {
             clip = this.clip,
             genre = this.genre,
             ratingDescription = this.ratingDescription
+        )
+
+    val GameEntity.asFavoriteEntity
+        get() = FavoriteEntity(
+            gameId = this.gameId,
+            slug = this.slug,
+            name = this.name,
+            nameOriginal = this.nameOriginal,
+            rating = this.rating,
+            backgroundImage = this.backgroundImage,
+            backgroundImageAdditional = this.backgroundImageAdditional,
+            parentPlatform = this.parentPlatform,
+            ratingDescription = this.ratingDescription
+        )
+
+    val FavoriteEntity.asGameEntity
+        get() = GameEntity(
+            gameId = this.gameId,
+            slug = this.slug,
+            name = this.name,
+            nameOriginal = this.nameOriginal,
+            rating = this.rating,
+            backgroundImage = this.backgroundImage,
+            backgroundImageAdditional = this.backgroundImageAdditional,
+            parentPlatform = this.parentPlatform,
+            ratingDescription = this.ratingDescription,
+            description = "",
+            clip = "",
+            descriptionRaw = "",
+            genre = "",
+            requirement = "",
+            released = ""
         )
 }
