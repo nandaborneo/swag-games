@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
@@ -19,27 +18,25 @@ import app.web.sleepcoder.swaggames.ui.LoadingStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.distinctUntilChangedBy
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    lateinit var viewBinding: FragmentHomeBinding
+    private lateinit var viewBinding: FragmentHomeBinding
 
     private val fragmentHomeViewModel: FragmentHomeViewModel by viewModels()
 
-    lateinit var adapter: ListGameAdapterPaging
+    private lateinit var adapter: ListGameAdapterPaging
 
-    var savedView: View? = null
+    private var savedView: View? = null
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (savedView == null){
+        if (savedView == null) {
             viewBinding = DataBindingUtil.inflate<FragmentHomeBinding?>(
                 inflater,
                 R.layout.fragment_home,
@@ -54,11 +51,6 @@ class HomeFragment : Fragment() {
         setupObserver()
 
         return savedView
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
     }
 
     private fun setupRecycler() {
@@ -112,4 +104,8 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        viewBinding.swipeLayout.isRefreshing = false
+        super.onDestroyView()
+    }
 }

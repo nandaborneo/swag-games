@@ -2,13 +2,14 @@
     <string name="app_name">Swag Games</string>
     <string name="title_favorite">Favorite</string>
     <string name="title_home">Home</string>
-    <string name="title_profile">Profile</string>
     <string name="image_game">Image Game</string>
     <string name="image_platform">Image Platform</string>
     <string name="rating">rating</string>
     <string name="search">Search</string>
     <string name="end_of_page">End of page</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="about">About</string>
+    <string name="favorite">Favorite</string>
+    <string name="background_image">Background Image</string>
+    <string name="back_button">Back Button</string>
+    <string name="favorite_button">Favorite Button</string>
 </resources>

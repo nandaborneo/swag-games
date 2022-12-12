@@ -2,7 +2,6 @@ package app.web.sleepcoder.core.domain.repository
 
 import androidx.paging.PagingData
 import app.web.sleepcoder.core.data.Resource
-import app.web.sleepcoder.core.data.source.local.entity.GameEntity
 import app.web.sleepcoder.core.domain.model.Game
 import kotlinx.coroutines.flow.Flow
 

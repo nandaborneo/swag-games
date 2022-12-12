@@ -14,14 +14,15 @@ import app.web.sleepcoder.core.utils.showSnackbar
 import app.web.sleepcoder.swaggames.R
 import app.web.sleepcoder.swaggames.databinding.FragmentDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
+import app.web.sleepcoder.core.R as CoreR
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
 
     private lateinit var viewBinding: FragmentDetailBinding
     private val fragmentDetailViewModel: DetailFragmentViewModel by viewModels()
-    val args: DetailFragmentArgs by navArgs()
-    var savedView: View? = null
+    private val args: DetailFragmentArgs by navArgs()
+    private var savedView: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,10 +43,6 @@ class DetailFragment : Fragment() {
             setupObserver()
         }
         return savedView
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun setupObserver() {
@@ -81,7 +78,10 @@ class DetailFragment : Fragment() {
                     findNavController().popBackStack()
                 }
                 fabFavorite.setOnClickListener {
-                    fragmentDetailViewModel.setFavorite()
+                    fragmentDetailViewModel.apply {
+                        setFavorite()
+                        context?.resources?.getString(if (game.value?.isFavorite == true) CoreR.string.removed_from_favorite else CoreR.string.saved_to_favorite)
+                    }
                 }
             }
 

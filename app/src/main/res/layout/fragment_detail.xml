@@ -38,7 +38,8 @@
                         android:scaleType="centerCrop"
                         loadImageUrl="@{vm.game.backgroundImage}"
                         app:layout_constraintDimensionRatio="1.5:1"
-                        tools:src="@drawable/placeholder_game" />
+                        tools:src="@drawable/placeholder_game"
+                        android:contentDescription="@string/background_image" />
 
                     <ImageView
                         android:id="@+id/iv_platform"
@@ -154,10 +155,11 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/ic_back_overlay"
-            android:paddingStart="16dp"
+            android:paddingHorizontal="16dp"
             android:paddingTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/back_button" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_favorite"
@@ -168,6 +170,6 @@
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
             android:src="@{vm.game.favorite ? @drawable/ic_baseline_favorite_filled_24 : @drawable/ic_baseline_favorite_border_24}"
-            />
+            android:contentDescription="@string/favorite_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

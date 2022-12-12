@@ -1,10 +1,8 @@
 package app.web.sleepcoder.core.data
 
-import android.util.Log
 import androidx.paging.*
 import app.web.sleepcoder.core.data.paging.GameRemoteMediator
 import app.web.sleepcoder.core.data.source.local.LocalDataSource
-import app.web.sleepcoder.core.data.source.local.room.SwagGameDatabase
 import app.web.sleepcoder.core.data.source.remote.RemoteDataSource
 import app.web.sleepcoder.core.data.source.remote.network.ApiResponse
 import app.web.sleepcoder.core.data.source.remote.response.GameDetailResponse
@@ -24,7 +22,6 @@ import javax.inject.Singleton
 class GamesRepository @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource,
-    private val database: SwagGameDatabase,
     private val appExecutors: AppExecutors
 ) : IGameRepository {
 

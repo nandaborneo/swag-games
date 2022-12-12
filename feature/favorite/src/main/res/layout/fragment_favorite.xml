@@ -14,7 +14,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginTop="8dp"
-            android:text="Favorite"
+            android:text="@string/favorite"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Favorite"/>
 
@@ -28,7 +28,8 @@
             app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/tv_label_list"
             app:spanCount="2"
-            tools:listitem="@layout/item_game" />
+            tools:listitem="@layout/item_game"
+            android:paddingBottom="48dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

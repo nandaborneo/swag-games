@@ -66,7 +66,7 @@ object DataMapper {
             description = "",
             descriptionRaw = "",
             released = this.released ?: "",
-            requirement = this.platforms.firstOrNull() { it.platform.name.contains("PC") }?.requirements_en?.recommended
+            requirement = this.platforms.firstOrNull { it.platform.name.contains("PC") }?.requirements_en?.recommended
                 ?: "",
             backgroundImage = this.background_image ?: "",
             backgroundImageAdditional = "",
@@ -93,7 +93,7 @@ object DataMapper {
             description = this.description,
             descriptionRaw = this.description_raw,
             released = this.released,
-            requirement = this.platforms.firstOrNull() { it.platform.name.contains("PC") }?.requirements_en?.recommended
+            requirement = this.platforms.firstOrNull { it.platform.name.contains("PC") }?.requirements_en?.recommended
                 ?: "",
             backgroundImage = this.background_image,
             backgroundImageAdditional = this.background_image_additional,

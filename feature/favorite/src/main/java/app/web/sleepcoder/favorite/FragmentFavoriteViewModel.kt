@@ -9,7 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class FragmentFavoriteViewModel @Inject constructor(private val gameUseCase: GameUseCase) :
+class FragmentFavoriteViewModel @Inject constructor(gameUseCase: GameUseCase) :
     ViewModel() {
 
     val listGames = gameUseCase.getFavoriteGame().asLiveData().cachedIn(viewModelScope)

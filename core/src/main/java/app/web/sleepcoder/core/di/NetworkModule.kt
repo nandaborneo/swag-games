@@ -3,13 +3,11 @@ package app.web.sleepcoder.core.di
 import android.app.Application
 import app.web.sleepcoder.core.BuildConfig
 import app.web.sleepcoder.core.data.source.remote.network.ApiServices
-import app.web.sleepcoder.core.utils.HttpPrettyLogger
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
-import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

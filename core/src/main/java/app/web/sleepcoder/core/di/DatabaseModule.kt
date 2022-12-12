@@ -18,10 +18,11 @@ import javax.inject.Singleton
 class DatabaseModule {
     @Singleton
     @Provides
-    fun provideDatabase(@ApplicationContext context: Context): SwagGameDatabase = Room.databaseBuilder(
-        context,
-        SwagGameDatabase::class.java, "swaggame.db"
-    ).fallbackToDestructiveMigration().build()
+    fun provideDatabase(@ApplicationContext context: Context): SwagGameDatabase =
+        Room.databaseBuilder(
+            context,
+            SwagGameDatabase::class.java, "swaggame.db"
+        ).fallbackToDestructiveMigration().build()
 
     @Provides
     fun provideGameDao(database: SwagGameDatabase): GameDao = database.gameDao()

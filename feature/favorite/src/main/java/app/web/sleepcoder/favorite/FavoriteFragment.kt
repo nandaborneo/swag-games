@@ -24,13 +24,13 @@ class FavoriteFragment : Fragment() {
     @Inject
     lateinit var factory: ViewModelFactory
 
-    lateinit var fragmentFavoriteViewModel: FragmentFavoriteViewModel
+    private lateinit var fragmentFavoriteViewModel: FragmentFavoriteViewModel
 
-    lateinit var viewBinding: FragmentFavoriteBinding
+    private lateinit var viewBinding: FragmentFavoriteBinding
 
-    lateinit var adapter: ListGameAdapterPaging
+    private lateinit var adapter: ListGameAdapterPaging
 
-    var savedView: View? = null
+    private var savedView: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -47,7 +47,7 @@ class FavoriteFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         if (savedView == null) {
             viewBinding = DataBindingUtil.inflate<FragmentFavoriteBinding?>(
                 inflater, R.layout.fragment_favorite, container, false

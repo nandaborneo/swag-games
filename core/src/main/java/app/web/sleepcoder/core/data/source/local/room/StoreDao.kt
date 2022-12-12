@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import app.web.sleepcoder.core.data.source.local.entity.RemoteKeys
 import app.web.sleepcoder.core.data.source.local.entity.StoreEntity
 
 @Dao
