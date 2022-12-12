@@ -8,6 +8,9 @@ jobs:
     executor: android/android
     steps:
       - checkout
+      - run:
+          name: Preparing local.properties
+          command: echo "RAWG_TOKEN=$RAWG_TOKEN" >> ~/repo/local.properties
       - restore_cache:
           key: android-orb-v1-
       - run:
