@@ -10,7 +10,7 @@ jobs:
       - checkout
       - run:
           name: Preparing local.properties
-          command: echo "RAWG_TOKEN=$RAWG_TOKEN" >> ~/swag-games/local.properties
+          command: echo "RAWG_TOKEN=$RAWG_TOKEN" >> ./local.properties
       - restore_cache:
           key: android-orb-v1-
       - run:
