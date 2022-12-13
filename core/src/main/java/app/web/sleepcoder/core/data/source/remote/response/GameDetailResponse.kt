@@ -2,7 +2,7 @@ package app.web.sleepcoder.core.data.source.remote.response
 
 data class GameDetailResponse(
     val background_image: String,
-    val background_image_additional: String,
+    val background_image_additional: String?,
     val clip: ClipResponse?,
     val description: String,
     val description_raw: String,

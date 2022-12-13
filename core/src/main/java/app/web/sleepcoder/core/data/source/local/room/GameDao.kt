@@ -23,6 +23,9 @@ interface GameDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertGame(games: List<GameEntity>)
 
+    @Update
+    suspend fun updateDetailGame(games: GameEntity)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun updateFavoriteGame(favorite: FavoriteEntity)
 

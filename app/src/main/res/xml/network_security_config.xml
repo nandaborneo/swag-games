@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">rawg.io</domain>
+        <domain includeSubdomains="true">api.rawg.io</domain>
+        <pin-set expiration="2023-05-17">
+            <pin digest="SHA-256">6i+nf58l8neEnNarZOvxiYfVbt2S2xurswGQQBBMa0U=</pin>
+            <pin digest="SHA-256">hS5jJ4P+iQUErBkvoWBQOd1T7VOAYlOVegvv1iMzpxA=</pin>
+        </pin-set>
+    </domain-config>
+</network-security-config>

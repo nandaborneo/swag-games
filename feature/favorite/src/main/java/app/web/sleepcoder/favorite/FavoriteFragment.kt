@@ -26,11 +26,10 @@ class FavoriteFragment : Fragment() {
 
     private lateinit var fragmentFavoriteViewModel: FragmentFavoriteViewModel
 
-    private lateinit var viewBinding: FragmentFavoriteBinding
+    private var viewBinding: FragmentFavoriteBinding? = null
 
     private lateinit var adapter: ListGameAdapterPaging
 
-    private var savedView: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -47,19 +46,18 @@ class FavoriteFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        if (savedView == null) {
+    ): View? {
+        if (viewBinding == null) {
             viewBinding = DataBindingUtil.inflate<FragmentFavoriteBinding?>(
                 inflater, R.layout.fragment_favorite, container, false
             ).apply {
                 lifecycleOwner = viewLifecycleOwner
             }
-            savedView = viewBinding.root
         }
         setupRecycler()
         setupObserver()
 
-        return viewBinding.root
+        return viewBinding?.root
     }
 
 
@@ -71,7 +69,7 @@ class FavoriteFragment : Fragment() {
             )
         }
 
-        viewBinding.rvListGame.adapter = adapter.withLoadStateFooter(
+        viewBinding?.rvListGame?.adapter = adapter.withLoadStateFooter(
             footer = LoadingStateAdapter({
                 adapter.retry()
             }, { Log.e(FavoriteFragment::class.simpleName, it) })
@@ -84,6 +82,12 @@ class FavoriteFragment : Fragment() {
                 adapter.submitData(lifecycle, it)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        viewBinding?.rvListGame?.adapter = null
+        viewBinding = null
+        super.onDestroyView()
     }
 
 }

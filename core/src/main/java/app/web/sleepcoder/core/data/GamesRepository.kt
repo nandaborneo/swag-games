@@ -69,7 +69,7 @@ class GamesRepository @Inject constructor(
                 remoteDataSource.getDetailGame(slug)
 
             override suspend fun saveCallResult(data: GameDetailResponse) {
-                localDataSource.insertGame(arrayListOf(data.asDatabaseLayer))
+                localDataSource.updateDetailGame(data.asDatabaseLayer)
                 localDataSource.insertStores(data.stores.map { it.asModelLayer("${data.id}") })
             }
 

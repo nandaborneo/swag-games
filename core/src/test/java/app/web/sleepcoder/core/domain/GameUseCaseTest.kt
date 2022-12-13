@@ -127,7 +127,6 @@ class GameUseCaseTest {
         )
         differ.submitData(actualReturn)
 
-
         Assert.assertNotNull(differ.snapshot())
         Assert.assertEquals(dummyListGame, differ.snapshot())
         Assert.assertEquals(dummyListGame.size, differ.snapshot().size)

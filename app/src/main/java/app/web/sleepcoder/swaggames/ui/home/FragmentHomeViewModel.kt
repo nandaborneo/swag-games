@@ -13,13 +13,10 @@ class FragmentHomeViewModel @Inject constructor(private val gameUseCase: GameUse
     val search = MutableLiveData("")
     val query = MutableLiveData("")
     val message = MutableLiveData("")
-    val isLoading = MutableLiveData(false)
-    val skipFirstFetchLoading = MutableLiveData(false)
+    var skipFetching = false
 
     val listGames =
-        if (skipFirstFetchLoading.value == true) liveData { }
-        else query.switchMap {
-            Log.e("log","query.switchMap => called")
+        query.switchMap {
             if (it.isNullOrBlank()) {
                 gameUseCase.getPopularGame().asLiveData().cachedIn(viewModelScope)
             } else

@@ -1,7 +1,10 @@
 package app.web.sleepcoder.core.domain.model
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import app.web.sleepcoder.core.R
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
@@ -37,21 +40,19 @@ data class Game(
             null
         }
 
-    @IgnoredOnParcel
-    @DrawableRes
-    val getDrawablePlatform:  Int? =
+    fun getDrawablePlatform(context: Context):  Drawable? =
         if (parentPlatform.contains(other = "pc", ignoreCase = true)) {
-            R.drawable.ic_platform_windows
+            ContextCompat.getDrawable(context,R.drawable.ic_platform_windows)
         } else if (parentPlatform.contains(other = "playstation", ignoreCase = true)) {
-            R.drawable.ic_platform_ps
+            ContextCompat.getDrawable(context,R.drawable.ic_platform_ps)
         } else if (parentPlatform.contains(other = "xbox", ignoreCase = true)) {
-            R.drawable.ic_platform_xbox
+            ContextCompat.getDrawable(context,R.drawable.ic_platform_xbox)
         } else if (parentPlatform.contains(other = "android", ignoreCase = true)) {
-            R.drawable.ic_platform_android
+            ContextCompat.getDrawable(context,R.drawable.ic_platform_android)
         } else if (parentPlatform.contains(other = "ios", ignoreCase = true)) {
-            R.drawable.ic_platform_ios
-        } else {
-            null
+            ContextCompat.getDrawable(context,R.drawable.ic_platform_ios)
+        }else{
+            ContextCompat.getDrawable(context, R.drawable.ic_baseline_image_not_supported_24)
         }
 
 }

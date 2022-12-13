@@ -1,5 +1,6 @@
 package app.web.sleepcoder.swaggames.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,62 +24,64 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private lateinit var viewBinding: FragmentHomeBinding
+    private var _viewBinding: FragmentHomeBinding? = null
+    private val viewBinding get() = _viewBinding
 
     private val fragmentHomeViewModel: FragmentHomeViewModel by viewModels()
 
-    private lateinit var adapter: ListGameAdapterPaging
+    private var adapter = ListGameAdapterPaging {
+        findNavController().navigate(
+            HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                it.slug
+            )
+        )
+    }
 
-    private var savedView: View? = null
-
+    override fun onPause() {
+        super.onPause()
+        fragmentHomeViewModel.skipFetching = true
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (savedView == null) {
-            viewBinding = DataBindingUtil.inflate<FragmentHomeBinding?>(
-                inflater,
-                R.layout.fragment_home,
-                container, false
-            ).apply {
-                lifecycleOwner = viewLifecycleOwner
-                vm = fragmentHomeViewModel
-            }
-            savedView = viewBinding.root
+        _viewBinding = DataBindingUtil.inflate<FragmentHomeBinding?>(
+            inflater,
+            R.layout.fragment_home,
+            container, false
+        ).apply {
+            lifecycleOwner = viewLifecycleOwner
+            vm = fragmentHomeViewModel
         }
+        return _viewBinding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (activity == null) return
+
         setupRecycler()
         setupObserver()
-
-        return savedView
     }
 
     private fun setupRecycler() {
-        adapter = ListGameAdapterPaging {
-            fragmentHomeViewModel.skipFirstFetchLoading.value = true
-            findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToDetailFragment(
-                    it.slug
-                )
-            )
-        }
+
         adapter.addLoadStateListener {
             if (it.refresh is LoadState.Error)
                 fragmentHomeViewModel.message.value =
                     (it.refresh as LoadState.Error).error.localizedMessage
-            if (fragmentHomeViewModel.skipFirstFetchLoading.value == true) return@addLoadStateListener
-            viewBinding.swipeLayout.isRefreshing =
-                adapter.itemCount == 0 && it.refresh is LoadState.Loading && fragmentHomeViewModel.skipFirstFetchLoading.value != true
+            viewBinding?.swipeLayout?.isRefreshing =
+                adapter.itemCount == 0 && it.refresh is LoadState.Loading
         }
 
-        viewBinding.rvListGame.adapter = adapter.withLoadStateFooter(footer = LoadingStateAdapter(
+        viewBinding?.rvListGame?.adapter = adapter.withLoadStateFooter(footer = LoadingStateAdapter(
             {
                 adapter.retry()
             }, { fragmentHomeViewModel.message.value = it })
         )
-        viewBinding.swipeLayout.setOnRefreshListener {
+        viewBinding?.swipeLayout?.setOnRefreshListener {
             adapter.refresh()
-            fragmentHomeViewModel.skipFirstFetchLoading.value = false
         }
     }
 
@@ -87,14 +90,17 @@ class HomeFragment : Fragment() {
         fragmentHomeViewModel.apply {
             listGames.observe(viewLifecycleOwner) {
                 adapter.submitData(lifecycle, it)
-                viewBinding.swipeLayout.isRefreshing = false
+                viewBinding?.swipeLayout?.isRefreshing = false
             }
             search.observe(viewLifecycleOwner) {
+                if (skipFetching){
+                    skipFetching = false
+                    return@observe
+                }
                 fetchJob?.cancel()
                 fetchJob = viewModelScope.launch {
                     delay(300)
                     query.postValue(it)
-                    skipFirstFetchLoading.value = false
                 }
             }
 
@@ -105,7 +111,8 @@ class HomeFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        viewBinding.swipeLayout.isRefreshing = false
+        _viewBinding?.rvListGame?.adapter = null
+        _viewBinding = null
         super.onDestroyView()
     }
 }

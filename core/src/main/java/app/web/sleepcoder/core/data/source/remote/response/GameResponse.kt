@@ -8,7 +8,7 @@ data class GameResponse(
     val id: Int,
     val name: String,
     val parent_platforms: List<ParentPlatform>,
-    val platforms: List<PlatformRequirement>,
+    val platforms: List<PlatformRequirement>?,
     val rating: Double,
     val rating_top: Int,
     val ratings: List<Rating>,

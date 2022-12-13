@@ -19,16 +19,15 @@ import app.web.sleepcoder.core.R as CoreR
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
 
-    private lateinit var viewBinding: FragmentDetailBinding
+    private var viewBinding: FragmentDetailBinding? = null
     private val fragmentDetailViewModel: DetailFragmentViewModel by viewModels()
     private val args: DetailFragmentArgs by navArgs()
-    private var savedView: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (savedView == null) {
+        if (viewBinding == null) {
             viewBinding = DataBindingUtil.inflate<FragmentDetailBinding?>(
                 inflater,
                 R.layout.fragment_detail,
@@ -39,20 +38,19 @@ class DetailFragment : Fragment() {
                 fragmentDetailViewModel.slug.value = args.slug
                 vm = fragmentDetailViewModel
             }
-            savedView = viewBinding.root
             setupObserver()
         }
-        return savedView
+        return viewBinding?.root
     }
 
     private fun setupObserver() {
 
         fragmentDetailViewModel.apply {
             detailGameResource.observe(viewLifecycleOwner) {
-                viewBinding.swipeLayout.isRefreshing = false
+                viewBinding?.swipeLayout?.isRefreshing = false
                 when (it) {
                     is Resource.Loading -> {
-                        viewBinding.swipeLayout.isRefreshing = true
+                        viewBinding?.swipeLayout?.isRefreshing = true
                         if (it.data != null) {
                             fragmentDetailViewModel.game.value = it.data
                         }
@@ -67,10 +65,10 @@ class DetailFragment : Fragment() {
             }
             message.observe(viewLifecycleOwner) {
                 if (it.isNullOrBlank()) return@observe
-                savedView?.let { it1 -> it.showSnackbar(it1) }
+                viewBinding?.root?.let { it1 -> it.showSnackbar(it1) }
             }
 
-            viewBinding.apply {
+            viewBinding?.apply {
                 swipeLayout.setOnRefreshListener {
                     fragmentDetailViewModel.slug.value = "${fragmentDetailViewModel.slug.value}"
                 }

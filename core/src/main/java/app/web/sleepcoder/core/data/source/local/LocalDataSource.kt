@@ -23,7 +23,9 @@ class LocalDataSource @Inject constructor(
 
     fun getDetailGame(slug: String): Flow<GameWithStores?> = gameDao.getDetailGame(slug)
 
-    suspend fun insertGame(tourismList: List<GameEntity>) = gameDao.insertGame(tourismList)
+    suspend fun insertGame(gameList: List<GameEntity>) = gameDao.insertGame(gameList)
+
+    suspend fun updateDetailGame(game: GameEntity) = gameDao.updateDetailGame(game)
 
     suspend fun deleteAllGame() {
         gameDao.deleteAll()

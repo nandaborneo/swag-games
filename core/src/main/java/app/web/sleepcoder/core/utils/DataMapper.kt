@@ -66,7 +66,7 @@ object DataMapper {
             description = "",
             descriptionRaw = "",
             released = this.released ?: "",
-            requirement = this.platforms.firstOrNull { it.platform.name.contains("PC") }?.requirements_en?.recommended
+            requirement = this.platforms?.firstOrNull { it.platform?.name?.contains("PC") ?: false }?.requirements_en?.recommended
                 ?: "",
             backgroundImage = this.background_image ?: "",
             backgroundImageAdditional = "",
@@ -80,7 +80,7 @@ object DataMapper {
         storeId = "${this.id}",
         gameStoreId = gameId,
         url = this.url ?: "",
-        name = this.store.name
+        name = this.store?.name ?: ""
     )
 
     val GameDetailResponse.asDatabaseLayer
@@ -93,10 +93,10 @@ object DataMapper {
             description = this.description,
             descriptionRaw = this.description_raw,
             released = this.released,
-            requirement = this.platforms.firstOrNull { it.platform.name.contains("PC") }?.requirements_en?.recommended
+            requirement = this.platforms.firstOrNull { it.platform?.name?.contains("PC") ?: false }?.requirements_en?.recommended
                 ?: "",
             backgroundImage = this.background_image,
-            backgroundImageAdditional = this.background_image_additional,
+            backgroundImageAdditional = this.background_image_additional ?: "",
             parentPlatform = this.parent_platforms.firstOrNull()?.platform?.name ?: "",
             ratingDescription = this.ratings.firstOrNull()?.title ?: "",
             genre = this.genres.joinToString(separator = ",", transform = { it.name }),

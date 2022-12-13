@@ -40,24 +40,6 @@ object GlobalBinding {
         }
     }
 
-    @BindingAdapter("loadImageDrawable")
-    @JvmStatic
-        fun loadImageDrawable(imageView: ImageView, resource: Int?) {
-        resource?.let {
-            imageView.load(resource, object : CustomTarget<Drawable>() {
-                override fun onResourceReady(
-                    resource: Drawable,
-                    transition: Transition<in Drawable>?
-                ) {
-                    imageView.background = resource
-                }
-
-                override fun onLoadCleared(placeholder: Drawable?) {}
-            })
-        }
-    }
-
-
     @Suppress("DEPRECATION")
     @BindingAdapter("textFromHtmlFormat")
     @JvmStatic
